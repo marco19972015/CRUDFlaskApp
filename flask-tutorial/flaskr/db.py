@@ -53,4 +53,5 @@ def init_app(app):
 # close_db function checks if a connection was created by checking if g.db was set. If the connection exists, it is closed.
 def close_db(e=None):
     db = g.pop('db', None)
-    db.close()
+    if db is not None:
+        db.close()
