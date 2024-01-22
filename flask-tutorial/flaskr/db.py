@@ -21,8 +21,7 @@ def get_db():
         )
         # sqlite3.row tells the connection to return rows that behave like dictionaries. This allows accessing the columns by name
         g.db.row_factory = sqlite3.Row
-
-        return g.db
+    return g.db
     
 def init_db():
     db = get_db()

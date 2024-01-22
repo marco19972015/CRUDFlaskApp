@@ -52,4 +52,11 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import blog
+    app.register_blueprint(blog.bp)
+    # Unlike the auth blueprint, the blog blueprint does not have a url_prefix. 
+    # So the index view will be at /, the create view at /create, and so on.
+    # Since the blog is the main feature, it makes sense to have it as index
+    app.add_url_rule('/', endpoint='index')
+
     return app

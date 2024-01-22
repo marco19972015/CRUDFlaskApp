@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <!-- First form - posts the edited data to the current page /<id>/update -->
+    <form method="post">
+        <label for="title">Title</label>
+        <!-- {{ request.form ...}} pattern is used to choose what data appears in the form. When the form hasn't been submitted, 
+            the original post data appears, but if invalid form data was posted we want to display that so the user can fix the error,
+            so request.form is used instead. request is another variable that's automatically available in temmplates -->
+        <input name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+        <label for="body">Body</label>
+        <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+        <input type="submit" value="Save">
+    </form>
+
+    <hr>
+
+    <!-- Second form - contains only a button and specifies an action attribute that posts to the delete view instead. -->
+    <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+        <!-- Some JS to show a confirmation dialog before submitting -->
+        <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+{% endblock %}
